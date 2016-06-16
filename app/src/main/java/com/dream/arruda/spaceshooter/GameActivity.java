@@ -28,7 +28,7 @@ import android.view.WindowManager;
  * Created by Arruda on 16/06/2016.
  */
 public class GameActivity extends Activity {
-    //private Tela t;
+    private Tela t;
     private DisplayMetrics metrics = new DisplayMetrics();
 
     @Override
@@ -41,19 +41,19 @@ public class GameActivity extends Activity {
         //get screen metrics for dynamic graphics
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         //Create our game class
-        //t = new Tela(this,metrics.widthPixels,metrics.heightPixels);
-        //setContentView(t);
+        t = new Tela(this,metrics.widthPixels,metrics.heightPixels);
+        setContentView(t);
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        //t.resume();
+        t.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-       // t.stopThread();
+        t.stopThread();
     }
 }
