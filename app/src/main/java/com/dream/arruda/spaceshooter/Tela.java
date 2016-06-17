@@ -1,5 +1,5 @@
 /*
-Copyright 2015 Ricardo Arruda Sowek
+Copyright 2016 Ricardo Arruda Sowek
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ import android.view.View;
  */
 public class Tela extends View implements Runnable {
 
+    private Parallax bg;
     private int width;
     private int height;
     private Thread game;
@@ -45,6 +46,7 @@ public class Tela extends View implements Runnable {
         super(context);
         width = w;
         height = h;
+        bg = new Parallax(context,width, height);
         game = new Thread(this);
         isrunning = false;
         paint = new Paint();
@@ -57,14 +59,14 @@ public class Tela extends View implements Runnable {
     @Override
     public void run(){
         while (isrunning) {
-            if(timer==0) {
+            //if(timer==0) {
                 currentTime = System.currentTimeMillis();
 
-                //a.Mover(elapsed);
+                bg.Mover(elapsed);
 
                 elapsed = (System.currentTimeMillis() - lastFrameTime) * .001f;//convert ms to seconds
                 lastFrameTime = currentTime;
-            }
+            //}
         }
     }
 
@@ -72,14 +74,14 @@ public class Tela extends View implements Runnable {
         isrunning = true;
         game = new Thread(this);
         game.start();
-        new CountDownTimer(4000, 1000) {
+        /*new CountDownTimer(4000, 1000) {
             public void onTick(long millisUntilFinished) {
                 timer = millisUntilFinished / 1000;
             }
             public void onFinish() {
                 timer =0;
             }
-        }.start();
+        }.start();*/
     }
 
     public void stopThread(){
@@ -107,8 +109,9 @@ public class Tela extends View implements Runnable {
         if(isrunning) {
 
         }
-        if(timer>0)
-            canvas.drawText(String.valueOf(timer),width/2-width/12,height/2-height/10,paint);
+        bg.Draw(canvas);
+       // if(timer>0)
+        //    canvas.drawText(String.valueOf(timer),width/2-width/12,height/2-height/10,paint);
         invalidate();
     }
 }
