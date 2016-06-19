@@ -28,27 +28,28 @@ import java.util.Random;
  * Created by ti on 17/06/2016.
  */
 public class Cloud {
-    public Bitmap cloud;
+    private Bitmap cloud;
     private float posOrigin;
     private float cloudposx;
     private float cloudposy;
     private float cloudvel;
 
     public Cloud(Context context, int w,int h){
-        cloud = BitmapFactory.decodeResource(context.getResources(),R.drawable.cloud);
+        cloud = BitmapFactory.decodeResource(context.getResources(),R.drawable.cloud2);
         posOrigin=w;
-        cloudposx=posOrigin;
+        cloudposx=(new Random().nextInt(w/3*4)+w);
         cloudposy=AddCloud(h/2-cloud.getHeight()/2);
-        cloudvel=w/(new Random().nextInt(20)+6);
+        cloudvel=w/(new Random().nextInt(20)+8);
     }
 
     private int AddCloud(int h){
-        long seed = System.currentTimeMillis();
+        long seed = System.nanoTime();
         seed ^= (seed << 21);
         seed ^= (seed >>> 35);
         seed ^= (seed << 4);
         int out = (int) seed % h;
-        return (out < 0 ? -out : out);
+        return new Random(out < 0 ? -out : out).nextInt(h);//(out < 0 ? -out : out);
+
     }
 
     public int Mover(float fps){

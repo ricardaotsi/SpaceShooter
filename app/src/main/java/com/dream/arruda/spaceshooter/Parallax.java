@@ -27,18 +27,18 @@ import java.util.LinkedList;
  * Created by ti on 17/06/2016.
  */
 public class Parallax {
-    public Bitmap sky;
-    public Bitmap land;
+    private Bitmap sky;
+    private Bitmap land;
     private LinkedList<Cloud> cloudList;
     private Context cont;
     private int width;
     private int height;
-    public float posOrigin1;
-    public float posOrigin2;
-    public float skypos1;
-    public float skypos2;
-    public float landpos1;
-    public float landpos2;
+    private float posOrigin1;
+    private float posOrigin2;
+    private float skypos1;
+    private float skypos2;
+    private float landpos1;
+    private float landpos2;
     private float skyvel;
     private float landvel;
 
@@ -73,7 +73,7 @@ public class Parallax {
         skypos2-=skyvel*fps;
         landpos1-=landvel*fps;
         landpos2-=landvel*fps;
-        if(cloudList.size()<=5)
+        if(cloudList.size()<=8)
             cloudList.addLast(new Cloud(cont, width, height));
         if(!cloudList.isEmpty()){
             for(int i=1; i<cloudList.size(); i++) {

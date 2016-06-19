@@ -30,6 +30,7 @@ import android.view.View;
 public class Tela extends View implements Runnable {
 
     private Parallax bg;
+    private Ship shp;
     private int width;
     private int height;
     private Thread game;
@@ -47,6 +48,7 @@ public class Tela extends View implements Runnable {
         width = w;
         height = h;
         bg = new Parallax(context,width, height);
+        shp=new Ship(context,width,height);
         game = new Thread(this);
         isrunning = false;
         paint = new Paint();
@@ -96,7 +98,8 @@ public class Tela extends View implements Runnable {
         switch(event.getAction())
         {
             case MotionEvent.ACTION_MOVE:
-                //p.Mover(event.getX());
+                if(event.getX()<=shp.finger.right)
+                    shp.Mover(event.getY());
                 break;
         }
         return true;
@@ -110,6 +113,7 @@ public class Tela extends View implements Runnable {
 
         }
         bg.Draw(canvas);
+        shp.Draw(canvas);
        // if(timer>0)
         //    canvas.drawText(String.valueOf(timer),width/2-width/12,height/2-height/10,paint);
         invalidate();
