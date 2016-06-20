@@ -107,11 +107,11 @@ public class Tela extends View implements Runnable {
                         shp.Mover(event.getY(1));
                 }
                 break;
-            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_DOWN:
                 if(event.getX()>=shp.finger.right)
                     shp.AddLaser();
                 break;
-            case MotionEvent.ACTION_POINTER_UP:
+            case MotionEvent.ACTION_POINTER_DOWN:
                 if (event.getX(pointerIndex) >= shp.finger.right)
                     shp.AddLaser();
                 break;
@@ -124,10 +124,9 @@ public class Tela extends View implements Runnable {
     {
         super.onDraw(canvas);
         if(isrunning) {
-
+            bg.Draw(canvas);
+            shp.Draw(canvas);
         }
-        bg.Draw(canvas);
-        shp.Draw(canvas);
        // if(timer>0)
         //    canvas.drawText(String.valueOf(timer),width/2-width/12,height/2-height/10,paint);
         invalidate();

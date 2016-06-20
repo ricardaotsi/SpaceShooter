@@ -24,7 +24,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-
+import android.os.Handler;
 import java.util.LinkedList;
 
 /**
@@ -53,6 +53,14 @@ public class Ship {
         laserlist = new LinkedList<Laser>();
         cont = context;
         width=w;
+        /*final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                laserlist.addLast(new Laser(cont, shipposx, shipposy+ship.getHeight()/3,width));
+                handler.postDelayed(this, 100);
+            }
+        }, 100);*/
     }
 
     public void MoverLaser(float fps){
@@ -63,7 +71,7 @@ public class Ship {
     }
 
     public void AddLaser(){
-        laserlist.addLast(new Laser(cont, shipposx, shipposy+ship.getHeight()/3,width));
+       laserlist.addLast(new Laser(cont, shipposx, shipposy+ship.getHeight()/3,width));
     }
 
     public void Mover(float y){

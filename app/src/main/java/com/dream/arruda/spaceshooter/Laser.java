@@ -35,7 +35,7 @@ public class Laser {
 
     public Laser(Context context, int x, int y, int w){
         laser = BitmapFactory.decodeResource(context.getResources(),R.drawable.laser);
-        posOrigin1=x;
+        posOrigin1=x+150;
         posOrigin2=y;
         laserpos=posOrigin1;
         laservel=w;
