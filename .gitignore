@@ -8,3 +8,4 @@ local.properties
 SpaceShooter.iml
 /app/build/
 /app/app.iml
+*.log

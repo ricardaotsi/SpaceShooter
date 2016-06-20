@@ -25,6 +25,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import java.util.LinkedList;
+
 /**
  * Created by ricardo on 6/19/16.
  */
@@ -35,16 +37,26 @@ public class Ship {
     private int shipposy;
     private Paint p;
     public Rect finger;
+    private LinkedList<Laser> laserlist;
+    private Context cont;
+    private int width;
 
     public Ship(Context context, int w, int h){
         ship= BitmapFactory.decodeResource(context.getResources(),R.drawable.spaceship);
         posOrigin=h/2-ship.getHeight()/2;
         shipposy = posOrigin;
-        shipposx=w/15*2;
+        shipposx=w/25*2;
         p=new Paint();
         p.setColor(Color.GRAY);
         p.setAlpha(80);
-        finger=new Rect(0,0,w/15*2,h);
+        finger=new Rect(0,0,w/25*2,h);
+        laserlist = new LinkedList<Laser>();
+        cont = context;
+        width=w;
+    }
+
+    public void AddLaser(){
+        laserlist.addLast(new Laser(cont, shipposx, shipposy+ship.getHeight()/3,width));
     }
 
     public void Mover(float y){
@@ -54,5 +66,9 @@ public class Ship {
     public void Draw(Canvas canvas){
         canvas.drawRect(finger,p);
         canvas.drawBitmap(ship, shipposx, shipposy, null);
+        if(!laserlist.isEmpty()){
+            for(int i=0; i<=laserlist.size()-1; i++)
+                laserlist.get(i).Draw(canvas);
+        }
     }
 }
