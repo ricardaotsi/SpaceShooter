@@ -65,6 +65,7 @@ public class Tela extends View implements Runnable {
                 currentTime = System.currentTimeMillis();
 
                 bg.Mover(elapsed);
+                shp.MoverLaser(elapsed);
 
                 elapsed = (System.currentTimeMillis() - lastFrameTime) * .001f;//convert ms to seconds
                 lastFrameTime = currentTime;
@@ -95,11 +96,24 @@ public class Tela extends View implements Runnable {
     //single touch event
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch(event.getAction())
-        {
+        int action = event.getAction() & MotionEvent.ACTION_MASK;
+        int pointerIndex = event.getActionIndex();
+        switch (action) {
             case MotionEvent.ACTION_MOVE:
                 if(event.getX()<=shp.finger.right)
                     shp.Mover(event.getY());
+                if(event.getPointerCount()>1){
+                    if(event.getX(1)<=shp.finger.right)
+                        shp.Mover(event.getY(1));
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                if(event.getX()>=shp.finger.right)
+                    shp.AddLaser();
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                if (event.getX(pointerIndex) >= shp.finger.right)
+                    shp.AddLaser();
                 break;
         }
         return true;
