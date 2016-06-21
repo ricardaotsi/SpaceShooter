@@ -26,11 +26,11 @@ import android.graphics.Canvas;
  * Created by ti on 20/06/2016.
  */
 public class Laser {
-    private Bitmap laser;
+    public Bitmap laser;
     private int posOrigin1;
-    private int posOrigin2;
+    public int posOrigin2;
     private int laservel;
-    private int laserpos;
+    public int laserpos;
     private int width;
 
     public Laser(Context context, int x, int y, int w){

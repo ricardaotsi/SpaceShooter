@@ -29,17 +29,17 @@ import java.util.Random;
  * Created by ti on 21/06/2016.
  */
 public class Enemy {
-    private Bitmap enemy;		// the animation sequence
+    public Bitmap enemy;		// the animation sequence
     private Rect sourceRect;	// the rectangle to be drawn from the animation bitmap
     private int frameNr;		// number of frames in animation
-    private int currentFrame;	// the current frame
+    private int currentFrame;	// the current frame of animation
     private long frameTicker;	// the time of the last frame update
-    private int framePeriod;	// milliseconds between each frame (1000/fps)
-    private int spriteWidth;	// the width of the sprite to calculate the cut out rectangle
+    private int framePeriod;	// milliseconds between each frame (1000/fps) of animation
+    public int spriteWidth;	// the width of the sprite to calculate the cut out rectangle
     private int spriteHeight;	// the height of the sprite
-    private float posOrigin1;				// the X coordinate of the object (top left of the image)
-    private float posOrigin2;				// the Y coordinate of the object (top left of the image)
-    private float enemyvel;
+    public float posOrigin1;				// the X coordinate of the object (top left of the image)
+    public float posOrigin2;				// the Y coordinate of the object (top left of the image)
+    private float enemyvel;  //velocity
 
     public Enemy(Context cont, int w, int h){
         enemy= BitmapFactory.decodeResource(cont.getResources(),R.drawable.enemy);
@@ -64,7 +64,7 @@ public class Enemy {
         return out;
     }
 
-    // the update method for Elaine
+    // the update method
     public boolean Mover(long gameTime, float fps) {
         if (gameTime > frameTicker + framePeriod) {
             frameTicker = gameTime;
@@ -77,6 +77,7 @@ public class Enemy {
         // define the rectangle to cut out sprite
         this.sourceRect.left = currentFrame * spriteWidth;
         this.sourceRect.right = this.sourceRect.left + spriteWidth;
+        //update position
         posOrigin1-=enemyvel*fps;
         if(posOrigin1+spriteWidth<=0)
             return true;
@@ -84,7 +85,6 @@ public class Enemy {
             return false;
     }
 
-    // the draw method which draws the corresponding frame
     public void Draw(Canvas canvas) {
         // where to draw the sprite
         Rect destRect = new Rect((int)posOrigin1, (int)posOrigin2, (int)posOrigin1 + spriteWidth, (int)posOrigin2 + spriteHeight);

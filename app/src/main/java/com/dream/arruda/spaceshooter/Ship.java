@@ -31,13 +31,13 @@ import java.util.LinkedList;
  * Created by ricardo on 6/19/16.
  */
 public class Ship {
-    private Bitmap ship;
+    public Bitmap ship;
     private int posOrigin;
-    private int shipposx;
-    private int shipposy;
+    public int shipposx;
+    public int shipposy;
     private Paint p;
     public Rect finger;
-    private LinkedList<Laser> laserlist;
+    public LinkedList<Laser> laserlist;
     private Context cont;
     private int width;
 
