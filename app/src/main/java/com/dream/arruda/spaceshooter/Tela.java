@@ -24,6 +24,8 @@ import android.os.CountDownTimer;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.LinkedList;
+
 /**
  * Created by Arruda on 16/06/2016.
  */
@@ -31,7 +33,7 @@ public class Tela extends View implements Runnable {
 
     private Parallax bg;
     private Ship shp;
-    private Enemy enemy;
+    private LinkedList<Enemy> enemylist;
     private int width;
     private int height;
     private Thread game;
@@ -50,7 +52,7 @@ public class Tela extends View implements Runnable {
         height = h;
         bg = new Parallax(context,width, height);
         shp=new Ship(context,width,height);
-        enemy=new Enemy(context);
+        enemylist=new LinkedList<Enemy>();
         game = new Thread(this);
         isrunning = false;
         paint = new Paint();
@@ -68,7 +70,12 @@ public class Tela extends View implements Runnable {
 
                 bg.Mover(elapsed);
                 shp.MoverLaser(elapsed);
-                enemy.update(currentTime);
+                if(enemylist.size()<=8)
+                    enemylist.addLast(new Enemy(this.getContext(),width,height));
+                for(int i=0; i<=enemylist.size()-1;i++){
+                    if(enemylist.get(i).Mover(currentTime,elapsed))
+                        enemylist.remove(i);
+                }
 
                 elapsed = (System.currentTimeMillis() - lastFrameTime) * .001f;//convert ms to seconds
                 lastFrameTime = currentTime;
@@ -129,7 +136,8 @@ public class Tela extends View implements Runnable {
         if(isrunning) {
             bg.Draw(canvas);
             shp.Draw(canvas);
-            enemy.draw(canvas);
+            for(int i=0; i<=enemylist.size()-1;i++)
+                enemylist.get(i).Draw(canvas);
         }
        // if(timer>0)
         //    canvas.drawText(String.valueOf(timer),width/2-width/12,height/2-height/10,paint);
