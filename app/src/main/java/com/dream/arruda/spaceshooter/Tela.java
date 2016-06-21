@@ -31,6 +31,7 @@ public class Tela extends View implements Runnable {
 
     private Parallax bg;
     private Ship shp;
+    private Enemy enemy;
     private int width;
     private int height;
     private Thread game;
@@ -49,6 +50,7 @@ public class Tela extends View implements Runnable {
         height = h;
         bg = new Parallax(context,width, height);
         shp=new Ship(context,width,height);
+        enemy=new Enemy(context);
         game = new Thread(this);
         isrunning = false;
         paint = new Paint();
@@ -66,6 +68,7 @@ public class Tela extends View implements Runnable {
 
                 bg.Mover(elapsed);
                 shp.MoverLaser(elapsed);
+                enemy.update(currentTime);
 
                 elapsed = (System.currentTimeMillis() - lastFrameTime) * .001f;//convert ms to seconds
                 lastFrameTime = currentTime;
@@ -126,6 +129,7 @@ public class Tela extends View implements Runnable {
         if(isrunning) {
             bg.Draw(canvas);
             shp.Draw(canvas);
+            enemy.draw(canvas);
         }
        // if(timer>0)
         //    canvas.drawText(String.valueOf(timer),width/2-width/12,height/2-height/10,paint);
