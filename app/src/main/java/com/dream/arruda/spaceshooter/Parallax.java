@@ -17,9 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package com.dream.arruda.spaceshooter;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import java.util.LinkedList;
 
@@ -29,8 +27,8 @@ import java.util.LinkedList;
 public class Parallax {
     private Bitmap sky;
     private Bitmap land;
+    private Bitmap cloud;
     private LinkedList<Cloud> cloudList;
-    private Context cont;
     private int width;
     private int height;
     private float posOrigin1;
@@ -42,11 +40,12 @@ public class Parallax {
     private float skyvel;
     private float landvel;
 
-    public Parallax(Context context, int w, int h){
-        sky = BitmapFactory.decodeResource(context.getResources(),R.drawable.sky);
-        land = BitmapFactory.decodeResource(context.getResources(),R.drawable.land);
+    public Parallax(Bitmap sky,Bitmap land,Bitmap cloud, int w, int h){
+        this.sky = sky;
+        this.land = land;
+        this.cloud = cloud;
         cloudList = new LinkedList<Cloud>();
-        cloudList.add(new Cloud(context,w,h));
+        cloudList.add(new Cloud(this.cloud,w,h));
         posOrigin1=0;
         posOrigin2=w-1;
         skypos1 =posOrigin1;
@@ -55,7 +54,6 @@ public class Parallax {
         landpos2=posOrigin2;
         skyvel = w/8;
         landvel = w/5;
-        cont=context;
         width=w;
         height=h;
     }
@@ -74,7 +72,7 @@ public class Parallax {
         landpos1-=landvel*fps;
         landpos2-=landvel*fps;
         if(cloudList.size()<=8)
-            cloudList.addLast(new Cloud(cont, width, height));
+            cloudList.addLast(new Cloud(cloud, width, height));
         if(!cloudList.isEmpty()){
             for(int i=1; i<cloudList.size(); i++) {
                 if(cloudList.get(i).Mover(fps)==1)

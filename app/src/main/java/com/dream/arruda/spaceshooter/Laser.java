@@ -17,9 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package com.dream.arruda.spaceshooter;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 
 /**
@@ -33,8 +31,8 @@ public class Laser {
     public int laserpos;
     private int width;
 
-    public Laser(Context context, int x, int y, int w){
-        laser = BitmapFactory.decodeResource(context.getResources(),R.drawable.laser);
+    public Laser(Bitmap laser, int x, int y, int w){
+        this.laser =laser;
         posOrigin1=x+150;
         posOrigin2=y;
         laserpos=posOrigin1;

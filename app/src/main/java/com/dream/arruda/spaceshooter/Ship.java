@@ -17,9 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package com.dream.arruda.spaceshooter;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -32,17 +30,18 @@ import java.util.LinkedList;
  */
 public class Ship {
     public Bitmap ship;
+    private Bitmap laser;
     private int posOrigin;
     public int shipposx;
     public int shipposy;
     private Paint p;
     public Rect finger;
     public LinkedList<Laser> laserlist;
-    private Context cont;
     private int width;
 
-    public Ship(Context context, int w, int h){
-        ship= BitmapFactory.decodeResource(context.getResources(),R.drawable.spaceship);
+    public Ship( Bitmap shipy,  Bitmap lasery, int w, int h){
+        this.ship= shipy;
+        this.laser=lasery;
         posOrigin=h/2-ship.getHeight()/2;
         shipposy = posOrigin;
         shipposx=w/25*2;
@@ -51,27 +50,28 @@ public class Ship {
         p.setAlpha(80);
         finger=new Rect(0,0,w/25*2,h);
         laserlist = new LinkedList<Laser>();
-        cont = context;
         width=w;
         /*final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                laserlist.addLast(new Laser(cont, shipposx, shipposy+ship.getHeight()/3,width));
-                handler.postDelayed(this, 100);
+                laserlist.addLast(new Laser(laser, shipposx, shipposy+ship.getHeight()/3,width));
+                handler.postDelayed(this, 200);
             }
-        }, 100);*/
+        }, 200);*/
     }
 
     public void MoverLaser(float fps){
         for(int i=0;i<=laserlist.size()-1;i++){
-            if(laserlist.get(i).Mover(fps))
+            if(laserlist.get(i).Mover(fps)) {
+                laserlist.set(i,null);
                 laserlist.remove(i);
+            }
         }
     }
 
     public void AddLaser(){
-       laserlist.addLast(new Laser(cont, shipposx, shipposy+ship.getHeight()/3,width));
+        laserlist.addLast(new Laser(laser, shipposx, shipposy+ship.getHeight()/3,width));
     }
 
     public void Mover(float y){
